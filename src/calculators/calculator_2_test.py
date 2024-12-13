@@ -1,12 +1,14 @@
 from src.calculators.calculator_2 import Calculator_2
 from pytest import raises
+from src.drivers.numpy_handler import NumpyHandler
 
 class MockRequest:
     def __init__(self, json: dict):
         self.json = json
 
 def test_calculator_2():
-    calculator = Calculator_2()
+    numpy_handler = NumpyHandler()
+    calculator = Calculator_2(numpy_handler)
     request = MockRequest({"numbers": [1, 2, 3]})
     result = calculator.calculate(request)
     expected_keys = ["RESULT"]
@@ -15,7 +17,8 @@ def test_calculator_2():
     assert round(result["RESULT"], 4) == 0.1365, "Result does not match expected value"
 
 def test_calculator_2_with_wrong_format():
-    calculator = Calculator_2()
+    numpy_handler = NumpyHandler()
+    calculator = Calculator_2(numpy_handler)
     request = MockRequest({"numbers": "1, 2, 3"})
     with raises(Exception, match="Wrong format") as exinfo:
         calculator.calculate(request)
