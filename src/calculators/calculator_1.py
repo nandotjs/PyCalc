@@ -3,7 +3,6 @@ from flask import request as FlaskRequest
 class Calculator_1:
     def calculate(self, request: FlaskRequest) -> dict: # type: ignore
         body = request.json
-
         input_data = self.__validate_request(body)
 
         splited_number = input_data / 3
@@ -15,9 +14,6 @@ class Calculator_1:
         result = first_step_result + second_step_result + third_step_result
 
         return {
-            "first part": first_step_result,
-            "second part": second_step_result,
-            "third part": third_step_result,
             "RESULT": result
         }
 
