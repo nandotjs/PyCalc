@@ -23,9 +23,7 @@ def test_calculator_3():
     expected_keys = ["RESULT"]
     assert all(key in result for key in expected_keys), "Result does not contain all expected keys"
     # assert isinstance(result["RESULT"], bool), "Result is not a bool"
-    with raises(Exception, match="Fail") as exinfo:
-        calculator.calculate(request)
-    assert str(exinfo.value) == "Fail"
+    assert result["RESULT"] == "Fail", "Result does not match expected value"
 
 def test_calculator_3_with_no_handler():
     numpy_handler = MockDriverHandler()

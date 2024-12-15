@@ -14,7 +14,7 @@ class Calculator_3:
         if result:
             return {"RESULT": "Success"}
         else:
-            raise Exception("Fail")
+            return {"RESULT": "Fail"}
 
     def __validate_request(self, body: dict) -> List[float]:
         numbers = body.get("numbers")
