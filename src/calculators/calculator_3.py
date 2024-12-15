@@ -1,6 +1,5 @@
 from typing import List
 from flask import request as FlaskRequest
-from src.drivers.numpy_handler import NumpyHandler
 from src.drivers.interfaces.driver_handler_interface import DriverHandlerInterface
 
 class Calculator_3:
@@ -12,9 +11,10 @@ class Calculator_3:
         input_data = self.__validate_request(body)
         result = self.__process_data(input_data)
 
-        return {
-            "RESULT": "Success" if result == 1 else "Fail"
-        }
+        if result:
+            return {"RESULT": "Success"}
+        else:
+            raise Exception("Fail")
 
     def __validate_request(self, body: dict) -> List[float]:
         numbers = body.get("numbers")
@@ -23,12 +23,10 @@ class Calculator_3:
 
         return [float(x) for x in numbers]
 
-    def __process_data(self, input_data: List[float]) -> float:
-        variance = self.__numpy_handler.var(input_data)
+    def __process_data(self, input_data: List[float]) -> bool:
+        variance = self.__numpy_handler.variance(input_data)
         multiplication = 1
         for number in input_data:
             multiplication *= number
         
-        if variance < multiplication:
-            return 1.0  # Sucesso
-        return 0.0  # Falha
+        return variance < multiplication

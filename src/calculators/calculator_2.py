@@ -1,6 +1,5 @@
 from typing import List
 from flask import request as FlaskRequest
-from src.drivers.numpy_handler import NumpyHandler
 from src.drivers.interfaces.driver_handler_interface import DriverHandlerInterface
 
 class Calculator_2:
