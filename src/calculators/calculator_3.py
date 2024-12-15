@@ -1,6 +1,8 @@
 from typing import List
 from flask import request as FlaskRequest
 from src.drivers.interfaces.driver_handler_interface import DriverHandlerInterface
+from src.errors.http_bad_request import HttpBadRequestError
+
 
 class Calculator_3:
     def __init__(self, numpy_handler: DriverHandlerInterface) -> None:
@@ -19,7 +21,7 @@ class Calculator_3:
     def __validate_request(self, body: dict) -> List[float]:
         numbers = body.get("numbers")
         if not isinstance(numbers, list) or not all(isinstance(x, (int, float)) for x in numbers):
-            raise Exception("Wrong format")
+            raise HttpBadRequestError("Wrong format")
 
         return [float(x) for x in numbers]
 

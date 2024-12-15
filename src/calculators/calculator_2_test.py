@@ -3,6 +3,8 @@ from pytest import raises
 from src.drivers.numpy_handler import NumpyHandler
 from src.drivers.interfaces.driver_handler_interface import DriverHandlerInterface
 from typing import List
+from src.errors.http_bad_request import HttpBadRequestError
+
 
 class MockRequest:
     def __init__(self, json: dict):
@@ -39,7 +41,7 @@ def test_calculator_2_with_wrong_format():
     numpy_handler = NumpyHandler()
     calculator = Calculator_2(numpy_handler)
     request = MockRequest({"numbers": "1, 2, 3"})
-    with raises(Exception, match="Wrong format") as exinfo:
+    with raises(HttpBadRequestError, match="Wrong format") as exinfo:
         calculator.calculate(request)
     assert str(exinfo.value) == "Wrong format"
 

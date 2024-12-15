@@ -1,5 +1,6 @@
 from src.calculators.calculator_1 import Calculator_1
 from pytest import raises
+from src.errors.http_bad_request import HttpBadRequestError
 
 class MockRequest:
     def __init__(self, json: dict):
@@ -17,7 +18,7 @@ def test_calculator_1():
 def test_calculator_1_with_wrong_format():
     calculator = Calculator_1()
     request = MockRequest({"number": "60"})
-    with raises(Exception, match="Wrong format") as exinfo:
+    with raises(HttpBadRequestError, match="Wrong format") as exinfo:
         calculator.calculate(request)
     assert str(exinfo.value) == "Wrong format"
 

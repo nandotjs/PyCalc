@@ -1,4 +1,5 @@
 from flask import request as FlaskRequest
+from src.errors.http_bad_request import HttpBadRequestError
 
 class Calculator_1:
     def calculate(self, request: FlaskRequest) -> dict: # type: ignore
@@ -19,7 +20,7 @@ class Calculator_1:
 
     def __validate_request(self, body: dict) -> float:
         if not isinstance(body.get("number"), (int, float)):
-            raise Exception("Wrong format")
+            raise HttpBadRequestError("Wrong format")
 
         return float(body["number"])
 
